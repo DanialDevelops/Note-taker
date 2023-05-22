@@ -27,6 +27,25 @@ app.post('/api/notes', (req, res) => {
 
         const notes = JSON.parse(data)
 
+        const userId = uuid;
+
+        const newNotes ={
+            id: userId,
+            title: req.body.title,
+            text: req.body.text,
+        }
+
+        notes.push(newNotes)
+
+        fs.writeFile('db/db.json', 'utf8', (err) => {
+            if(err){
+                console.log(err)
+                return res.status(500).json({ error: 'Failed to save the note.' });
+            }
+
+            res.json(newNote);
+        })
+
     })
 });
 
